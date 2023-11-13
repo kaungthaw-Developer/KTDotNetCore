@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KTDotNetCore.ConsoleApp", "KTDotNetCore.ConsoleApp\KTDotNetCore.ConsoleApp.csproj", "{4102FD89-4407-4A75-BBA8-0B87CDFA57D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KTDotNetCore.ConsoleApp", "KTDotNetCore.ConsoleApp\KTDotNetCore.ConsoleApp.csproj", "{4102FD89-4407-4A75-BBA8-0B87CDFA57D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KTDotNetCore.WindowsFormsApp", "KTDotNetCore.WindowsFormsApp\KTDotNetCore.WindowsFormsApp.csproj", "{894A25F6-800A-4044-9EE2-53C4D2EF649D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KTDotNetCore.RestApi", "KTDotNetCore.RestApi\KTDotNetCore.RestApi.csproj", "{D799ACE1-7D3C-4E32-96A7-3AE78E73030B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KTDotNetCore.Mvc", "KTDotNetCore.Mvc\KTDotNetCore.Mvc.csproj", "{5D616484-F40A-4234-9583-42C584ECE70A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{4102FD89-4407-4A75-BBA8-0B87CDFA57D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4102FD89-4407-4A75-BBA8-0B87CDFA57D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4102FD89-4407-4A75-BBA8-0B87CDFA57D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{894A25F6-800A-4044-9EE2-53C4D2EF649D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{894A25F6-800A-4044-9EE2-53C4D2EF649D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{894A25F6-800A-4044-9EE2-53C4D2EF649D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{894A25F6-800A-4044-9EE2-53C4D2EF649D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D799ACE1-7D3C-4E32-96A7-3AE78E73030B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D799ACE1-7D3C-4E32-96A7-3AE78E73030B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D799ACE1-7D3C-4E32-96A7-3AE78E73030B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D799ACE1-7D3C-4E32-96A7-3AE78E73030B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D616484-F40A-4234-9583-42C584ECE70A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D616484-F40A-4234-9583-42C584ECE70A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D616484-F40A-4234-9583-42C584ECE70A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D616484-F40A-4234-9583-42C584ECE70A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
