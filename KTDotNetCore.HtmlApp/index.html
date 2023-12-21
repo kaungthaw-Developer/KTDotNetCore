@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-3.2.6.min.css"
+    integrity="sha256-quZ4+TPWUyQzuPnahKf6d8Xal6tZcYZTzSt4wFVEFn8=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ladda-bootstrap/0.9.4/ladda-themeless.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.min.css" integrity="sha512-8vq2g5nHE062j3xor4XxPeZiPjmRDh6wlufQlfC6pdQ/9urJkU07NM0tEREeymP++NczacJ/Q59ul+/K2eYvcg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.css" integrity="sha512-J5tsMaZISEmI+Ly68nBDiQyNW6vzBoUlNHGsH8T3DzHTn2h9swZqiMeGm/4WMDxAphi5LMZMNA30LvxaEPiPkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="datepicker-1.0.10/datepicker-1.0.10/dist/datepicker.min.css"/>
+</head>
+
+<body>
+    <input type="text" class="form-control" id="txtTest" />
+    <button class="btn btn-primary ladda-button" id="btnSave" type="button"  data-style="zoom-out">Save</button>
+    <button type="button" class="btn btn-info ladda-button" id="btnUpdate" data-style="zoom-out">Update</button>
+    <a href="datatable.html" class="btn btn-info">Go to dataTable</a>
+    <button type="button" onclick="first(1)">something</button>
+  <div class="icheck-primary icheck-inline">
+      <input type="checkbox" id="chb" onclick="show()"/>
+      <label for="chb">Label 2</label>
+  </div>
+  <div>
+
+    <div class="icheck-primary icheck-inline">
+      <input type="checkbox" id="chb1" />
+      <label for="chb1">Label 1</label>
+  </div>
+  <div class="icheck-primary icheck-inline">
+      <input type="checkbox" id="chb2" />
+      <label for="chb2">Label 2</label>
+  </div>
+  </div>
+  <input data-toggle="datepicker">
+<input data-toggle="datepicker"></input>
+<div data-toggle="datepicker"></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Select</th>
+                <th scope="col">No.</th>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+            </tr>
+        </thead>
+        <tbody id="tbodyTest">
+
+        </tbody>
+    </table>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ladda-bootstrap/0.9.4/spin.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ladda-bootstrap/0.9.4/ladda.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-aio-3.2.6.min.js"
+        integrity="sha256-pXMqYvjzxYjuQ3+Iz0Zpw3Tk3BAoet8dOsODol/iqTI=" crossorigin="anonymous"></script>
+        <script src="datepicker-1.0.10/datepicker-1.0.10/dist/datepicker.min.js"></script>
+    <script>
+    $('[data-toggle="datepicker"]').datepicker();
+          Notiflix.Notify.init({
+      width: '280px',
+      position: 'right-top',
+      distance: '10px',
+      opacity: 1,
+      borderRadius: '5px',
+      rtl: false,
+      timeout: 3000,
+      messageMaxLength: 110,
+      backOverlay: false,
+      backOverlayColor: 'rgba(0,0,0,0.5)',
+      plainText: true,
+      showOnlyTheLastOne: true,
+      clickToClose: false,
+      pauseOnHover: true,
+      ID: 'NotiflixNotify',
+      className: 'notiflix-notify',
+      zindex: 4001,
+      fontFamily: 'Quicksand',
+      fontSize: '13px',
+      cssAnimation: true,
+      cssAnimationDuration: 400,
+      cssAnimationStyle: 'fade',
+      closeButton: false,
+      useIcon: true,
+      useFontAwesome: false,
+      fontAwesomeIconStyle: 'basic',
+      fontAwesomeIconSize: '34px',
+      success: {
+        background: '#32c682',
+        textColor: '#fff',
+        childClassName: 'notiflix-notify-success',
+        notiflixIconColor: 'rgba(0,0,0,0.2)',
+        fontAwesomeClassName: 'fas fa-check-circle',
+        fontAwesomeIconColor: 'rgba(0,0,0,0.2)',
+        backOverlayColor: 'rgba(50,198,130,0.2)',
+      },
+      failure: {
+        background: '#ff5549',
+        textColor: '#fff',
+        childClassName: 'notiflix-notify-failure',
+        notiflixIconColor: 'rgba(0,0,0,0.2)',
+        fontAwesomeClassName: 'fas fa-times-circle',
+        fontAwesomeIconColor: 'rgba(0,0,0,0.2)',
+        backOverlayColor: 'rgba(255,85,73,0.2)',
+      },
+      warning: {
+        background: '#eebf31',
+        textColor: '#fff',
+        childClassName: 'notiflix-notify-warning',
+        notiflixIconColor: 'rgba(0,0,0,0.2)',
+        fontAwesomeClassName: 'fas fa-exclamation-circle',
+        fontAwesomeIconColor: 'rgba(0,0,0,0.2)',
+        backOverlayColor: 'rgba(238,191,49,0.2)',
+      },
+      info: {
+        background: '#26c0d3',
+        textColor: '#fff',
+        childClassName: 'notiflix-notify-info',
+        notiflixIconColor: 'rgba(0,0,0,0.2)',
+        fontAwesomeClassName: 'fas fa-info-circle',
+        fontAwesomeIconColor: 'rgba(0,0,0,0.2)',
+        backOverlayColor: 'rgba(38,192,211,0.2)',
+      },
+    });
+    function show(){
+      Toastify({
+
+text: "This is a toast",
+
+duration: 3000
+
+}).showToast();
+    }
+        var editID = '';
+        loadTable();
+        $('#btnSave').click(function (e) {
+         
+            if(editID==null || editID==''){
+
+                e.preventDefault();
+                var l=Ladda.create(this);
+                
+                var test = $('#txtTest').val();
+                if(test==null || test.trim()==''){
+                 validate("Can not Empty");
+                return;
+                }
+               
+                Notiflix.Loading.circle();
+                var lst = getData();
+                const data = {
+                    Id: uuid(),
+                    Name: test
+                }
+                lst.push(data);
+                localStorage.setItem('Tbl_Test', JSON.stringify(lst));
+                
+                 $('#txtTest').val('');
+                 $('#txtTest').focus();
+                 setTimeout(() => {
+                    Notiflix.Loading.remove();
+            loadTable();
+          }, 2000);
+            }
+           else{
+            validate("Can be update");
+           }
+        })
+
+        function loadTable() {
+            $('#tbodyTest').empty();
+            var lst = getData();
+
+            $.each(lst, function (key, value) {
+                let html = `<tr>
+    <td>
+        <button type="button" class="btn btn-warning" onclick="Edit(this)" data-id="${value.Id}">Edit</button>
+        <button type="button" class="btn btn-danger" onclick="Delete(this)" data-id="${value.Id}">Delete</button>
+        </td>
+        <td>
+          <div class="icheck-primary icheck-inline">
+      <input type="checkbox" id="chb1${value.Id}" />
+      <label for="chb1${value.Id}">Label 1</label>
+  </div>
+          <td>
+    <td>${key + 1}</td>
+    <td>${value.Id}</td>
+    <td>${value.Name}</td>
+</tr>`;
+                $('#tbodyTest').append(html);
+            });
+        }
+
+        // function Edit(edit) {
+        //     let id = $(edit).data('id');
+        //     let data = getData();
+        //     console.log(id);
+        //     const result = data.filter(function (x) {
+        //         return x.Id == id;
+
+        //     })
+        //     var item = result[0];
+        //     $('#txtTest').val(item.Name).focus();
+        //     editID = item.Id;
+
+        // }
+        $('#btnUpdate').click(function (e) {
+            const value=$('#txtTest').val();
+            e.preventDefault(e)
+            var l=Ladda.create(this);
+            
+            if (editID === '') {
+                validate("First Choose the Edit");
+                    return;
+            };
+            if(value==null || value.trim()==""){
+                validate("Update can not be Empty");
+                return;
+            }
+            l.start()
+            var data = getData();
+            console.log(editID);
+            let index = data.findIndex(x => x.Id == editID);
+            console.log(index);
+            
+            data[index].Name = value;
+            
+            editID = '';
+            setLocal(data);
+            $('#txtTest').val('');
+            $('#txtTest').focus();
+            setTimeout(() => {
+        l.stop();
+        loadTable();
+      }, 2000);
+        })
+        function Delete(ID){
+          const deleteID=$(ID).data('id');
+            let data=getData();
+            let index=data.findIndex(x=> x.Id==deleteID);
+            console.log(index);
+            data[index] 
+            data.splice(index,1);
+           
+            confirm("Are you sure want to delete?").then((result) => {
+          console.log(result);
+          if (!result) return;
+          let id = $(ID).data("id");
+          var lst = getData();
+          let index = lst.findIndex((x) => x.Id == id);
+          lst.splice(index, 1);
+
+          setLocal(lst);
+          loadTable();
+          successMsg("Deleting Successful.");
+        });
+        }
+        function uuid() {
+            return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+        }
+        function getData() {
+            var list = [];
+            var jsonString = localStorage.getItem('Tbl_Test');
+            console.log(jsonString);
+            console.log(JSON.parse(jsonString));
+            if (!(jsonString == undefined || jsonString === null || jsonString === '')) {
+                list = JSON.parse(jsonString);
+            }
+            return list;
+        }
+        function setLocal(data){
+            localStorage.setItem('Tbl_Test',JSON.stringify(data));
+        }
+        function validate(message){
+            Swal.fire({
+                    title: message,
+                    showClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeInUp
+                        animate__faster
+                        `
+                    }
+                    });
+        }
+        function save(){
+
+        }
+        function confirm(message){
+            return new Promise(function (resolve, reject) {
+          Swal.fire({
+            title: "Confirm",
+            text: message,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+          }).then((result) => {
+            resolve(result.isConfirmed);
+          });
+        });
+        }
+        function successMsg(message) {
+        Swal.fire({
+          title: "Success",
+          text: message,
+          icon: "success",
+        });
+
+      }
+       
+  
+    </script>
+
+</html>
