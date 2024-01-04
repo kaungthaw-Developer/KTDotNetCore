@@ -14,10 +14,13 @@ namespace KTDotNetCore.ATMWebApp.Controllers
         private readonly ATMDbContext _atmDbContext;
 
         private readonly IdGenerator _idGenerator = new IdGenerator(0);
+
         public ATMController(ATMDbContext atmDbContext)
         {
             _atmDbContext = atmDbContext;
         }
+
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -26,10 +29,6 @@ namespace KTDotNetCore.ATMWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> SingIn(SingInModel singIn)
         {
-            if(singIn is null)
-            {
-
-            }
             bool exit = await _atmDbContext.UserIfo.AsNoTracking().AnyAsync(x => x.PhoneNumber == singIn.Phone && x.Password == singIn.Password && x.IsActive == true);
             if (exit )
             {
@@ -41,6 +40,8 @@ namespace KTDotNetCore.ATMWebApp.Controllers
             }
             return View("Index");
         }
+
+        [HttpGet]
         public async Task<IActionResult> UserHome()
         {
             var readySign = HttpContext.Session.GetString("LoginData");
@@ -52,19 +53,22 @@ namespace KTDotNetCore.ATMWebApp.Controllers
             }
             return Redirect("Index");
         }
+
+        [HttpGet]
         public IActionResult UserCreate()
         {
             return View();
         }
 
-        [ActionName("Save")]
         [HttpPost]
+        [ActionName("Save")]
         public async Task<IActionResult> UserCreate(UserDataModel userData)
         {
             var number = await _atmDbContext.UserIfo.AsNoTracking().FirstOrDefaultAsync(x => x.PhoneNumber == userData.PhoneNumber);
             if (number != null)
             {
-                return Redirect("create");
+                TempData["Message"] = "Phone existing in Our DataBase";
+                return RedirectToAction("UserCreate");
             }
             userData.UserID = _idGenerator.CreateId().ToString();
             userData.IsActive = true;
@@ -73,7 +77,8 @@ namespace KTDotNetCore.ATMWebApp.Controllers
             await _atmDbContext.UserIfo.AddAsync(userData);
             var result = await _atmDbContext.SaveChangesAsync();
 
-            return RedirectToAction("/index");
+            TempData["AlertMessage"] ="Please Copy ur Card Number - "+ userData.CardNumber;
+            return RedirectToAction("index");
 
         }
 
@@ -95,6 +100,8 @@ namespace KTDotNetCore.ATMWebApp.Controllers
             }
             return View();
         }
+
+        [HttpGet]
         public async Task<IActionResult> Nextpage(string userID)
         {
             bool logIn = await _atmDbContext.UserIfo.AsNoTracking().AnyAsync(x => x.UserID == userID && x.IsActive == true);
@@ -110,6 +117,7 @@ namespace KTDotNetCore.ATMWebApp.Controllers
             }
             return View();
         }
+
         [HttpGet]
         public async Task<IActionResult> CashOut()
         {
@@ -117,8 +125,8 @@ namespace KTDotNetCore.ATMWebApp.Controllers
             return View();
         }
         
-        [ActionName("reqeust")]
         [HttpPost]
+        [ActionName("reqeust")]
         public async Task<IActionResult> CashOut(CashOutModel cashOut)
         {
            var withDraw = await _atmDbContext.UserIfo.FirstOrDefaultAsync(x => x.UserID == cashOut.UserID && x.CardNumber == cashOut.CardNumber && x.PinCode == cashOut.PinCode);
@@ -138,9 +146,10 @@ namespace KTDotNetCore.ATMWebApp.Controllers
              var result = await _atmDbContext.SaveChangesAsync();
 
                 }
-                    return View("UserHome", withDraw);
-            // return Redirect("UserHome");    
+                    return View();   
         }
+
+        [HttpGet]
         public IActionResult Deposit()
         {
             return View();
@@ -164,9 +173,9 @@ namespace KTDotNetCore.ATMWebApp.Controllers
 
                     await _atmDbContext.History.AddAsync(history);
                 var result = await _atmDbContext.SaveChangesAsync();
-                return View("UserHome", withDraw);
+                return View();
             }
-            return View("UserHome", withDraw);
+            return View();
         }
     }
 }

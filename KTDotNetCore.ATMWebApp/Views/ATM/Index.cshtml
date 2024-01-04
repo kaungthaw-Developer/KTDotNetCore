@@ -1,5 +1,11 @@
 ﻿@model SingInModel
-
+@if (TempData["AlertMessage"] != null)
+{<script>
+         window.onload = function () {
+             alert('@TempData["AlertMessage"]');
+         };
+</script>
+}
 <div class="signin-image">
     <figure>
         <img src="~/images/signin-image.jpg" alt="sing up image">
@@ -28,3 +34,10 @@
     </form>
 
 </div>
+@section Scripts{
+    <script>
+        window.onload = function () {
+            localStorage.clear();
+        };
+    </script>
+}

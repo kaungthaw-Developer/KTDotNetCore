@@ -1,4 +1,12 @@
-﻿<div class="signup-content">
+﻿@if (TempData["Message"] != null)
+{
+	<script>
+		 window.onload = function () {
+			 alert('@TempData["Message"]');
+		 };
+	</script>
+}
+<div class="signup-content">
 	<div class="signup-form">
 		<h2 class="form-title">Registration</h2>
 
