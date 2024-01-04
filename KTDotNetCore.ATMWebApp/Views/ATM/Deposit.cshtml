@@ -1,0 +1,57 @@
+﻿
+<div class="signin-image">
+    <figure>
+        <img src="~/images/signin-image.jpg" alt="sing up image">
+    </figure>
+</div>
+<div class="signin-form">
+    <h2 class="form-title">Deposit </h2>
+
+    <div class="form-group" id="first">
+        <label for="phone">
+            <i class="zmdi zmdi-account material-icons-name"></i>
+        </label> <input type="text" name="CardNumber" id="cardNumber" placeholder="Enter your Card Number" />
+    </div>
+    <div class="form-group" id="second">
+        <label for="temporary"><i class="zmdi zmdi-lock"></i></label>
+        <input type="password" name="pinCode" id="pinCode" placeholder="Enter your Pin Code" />
+    </div>
+    <div class="form-group">
+        <label for="amount"><i class="zmdi zmdi-lock"></i></label>
+        <input type="number" name="moneyAmount" id="amount" placeholder="Enter Amount" />
+    </div>
+    <div class="form-group form-button" id="nextpage">
+        <input type="button" id="Comfirm"
+               class="form-submit" value="Comfirm" />
+    </div>
+
+</div>
+@section Scripts{
+    <script>
+
+
+        $('#Comfirm').click(function () {
+            var listId = getData()[0];
+            var _cashLass = {
+                UserID: listId.ID,
+                CardNumber: $('#cardNumber').val(),
+                pinCode: $('#pinCode').val(),
+                moneyAmount: $('#amount').val()
+            };
+
+            $.ajax({
+                url: 'deposit',
+                type: 'Post',
+                data: {
+                    cashIn: _cashLass
+                },
+                success: function (data) {
+                    window.location.href = 'UserHome';
+                },
+
+
+            })
+        })
+
+    </script>
+}

@@ -1,0 +1,124 @@
+﻿@model KTDotNetCore.ATMWebApp.Models.UserDataModel
+<div class="signin-image">
+    <figure>
+        <img src="~/images/signin-image.jpg" alt="sing up image">
+    </figure>
+    <a href="home" class="signup-image-link">
+        Sign out
+    </a>
+</div>
+<div class="signin-form" id="page1">
+    <h2 class="form-title">Sign up</h2>
+    <div class="form-group form-button">
+        <input type="button" id="history"
+               class="form-submit" value="Check Balance & History" />
+    </div>
+    <div class="form-group form-button">
+        <input type="button" id="cashOut"
+               class="form-submit" value="Cash Out" />
+    </div>
+    
+    <div class="form-group form-button">
+        <a href="deposit">
+            <input type="button" id="deposit"
+                   class="form-submit" value="Deposit" />
+        </a>
+       
+    </div>
+
+</div>
+
+<div class="signin-form" id="page2" hidden>
+    <h2 class="form-title">History</h2>
+    <input type="text" id="amount" style="font-size:medium;" readonly />
+    <table id="table" class="table">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+
+@section Scripts{
+    <script>
+        var lst = getData();
+        const data = {
+            ID: '@Model.UserID'
+        }
+        lst.push(data);
+        localStorage.setItem('Table_UserInfo', JSON.stringify(lst));
+        var listId = getData()[0];
+        $('#history').click(function () {
+            var page1 = $('#page1');
+            var page2 = $('#page2');
+            $.ajax({
+                url: 'histroy',
+                type: 'POST',
+                data: {
+                    userID: listId.ID
+                },
+                success: function (response) {
+                    var data = response.userHistories;
+                    var amount = response.amount.totalAmount;
+                    var status = response.amount.status;
+                    var formattedAmount = amount.toLocaleString();
+                    $('#amount').val('Total Amount is ' + formattedAmount + ' MMK');
+                    page1.css('display', 'none');
+                    page2.css('display', 'block');
+                    $.each(data, function (index, value) {
+                        let formattedDate = new Date(value.lastUpdate).toLocaleString('en-US', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit'
+                        });
+                        let tablehtml = `<tr>
+                                                    <td>${index + 1}</td>
+                                                    <td>${value.cashOutAmount}</td>
+                                                    <td>${value.status}</td>
+                                                            <td>${formattedDate}</td>
+                                                </tr>`;
+                        $('#table').append(tablehtml);
+                    });
+               }
+
+
+          })
+        })
+        $('#cashOut').click(function () {
+            $.ajax({
+                url: 'nextpage?userID=' + listId.ID,
+                type: 'GET',
+                success: function (response) {
+                    window.location.href = response;
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            })
+        })
+
+       
+
+        // $('#deposit').click(function () {
+        //     $.ajax({
+        //         url: 'deposit',
+        //         type: 'GET',
+        //         success: function (response) {
+        //             window.location.href = response;
+        //         },
+        //         error: function (error) {
+        //             console.error('Error:', error);
+        //         }
+        //     })
+        // })
+
+    </script>
+}

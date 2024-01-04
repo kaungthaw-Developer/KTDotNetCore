@@ -1,5 +1,6 @@
 ﻿using KTDotNetCore.Mvc.EfDbContext;
 using KTDotNetCore.Mvc.Model;
+using KTDotNetCore.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
