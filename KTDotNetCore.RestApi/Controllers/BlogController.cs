@@ -9,17 +9,17 @@ namespace KTDotNetCore.RestApi.Controllers
     [ApiController]
     public class BlogController : ControllerBase
     {
-        private readonly AppDbContext _db;
+        private readonly AppDbContext _context;
 
-        public BlogController(AppDbContext db)
+        public BlogController(AppDbContext context)
         {
-            this._db = db;
+            this._context = context;
         }
 
         [HttpGet]
         public IActionResult GetBlog()
         {
-            List<BlogDataModels> lst = _db.Blogs.ToList();
+            List<BlogDataModels> lst = _context.Blogs.ToList();
             BlogListResponseModel model = new BlogListResponseModel()
             {
                 IsSuccess = true,
@@ -31,11 +31,11 @@ namespace KTDotNetCore.RestApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetBlog(int id)
+        public IActionResult EditBlog(int id)
         {
             BlogResponseModel model = new BlogResponseModel();
 
-            BlogDataModels item = _db.Blogs.FirstOrDefault(x => x.Blog_Id == id);
+            BlogDataModels item = _context.Blogs.FirstOrDefault(x => x.Blog_Id == id);
             if (item is null)
             {
                 model.IsSuccess = false;
@@ -52,8 +52,8 @@ namespace KTDotNetCore.RestApi.Controllers
         [HttpPost]
         public IActionResult CreateBlog([FromBody] BlogDataModels blog)
         {
-            _db.Blogs.Add(blog);
-            var result = _db.SaveChanges();
+            _context.Blogs.Add(blog);
+            var result = _context.SaveChanges();
             string message = result > 0 ? "Saving Successful." : "Saving Failed.";
             BlogResponseModel model = new BlogResponseModel()
             {
@@ -68,7 +68,7 @@ namespace KTDotNetCore.RestApi.Controllers
         {
             BlogResponseModel model = new BlogResponseModel();
 
-            BlogDataModels item = _db.Blogs.FirstOrDefault(x => x.Blog_Id == id);
+            BlogDataModels item = _context.Blogs.FirstOrDefault(x => x.Blog_Id == id);
             if (item == null)
             {
                 model.IsSuccess = false;
@@ -80,7 +80,7 @@ namespace KTDotNetCore.RestApi.Controllers
             item.Blog_Author = blog.Blog_Author;
             item.Blog_Content = blog.Blog_Content;
 
-            var result = _db.SaveChanges();
+            var result = _context.SaveChanges();
             string message = result > 0 ? "Updating Successful." : "Updating Failed.";
 
             model = new BlogResponseModel()
@@ -95,7 +95,7 @@ namespace KTDotNetCore.RestApi.Controllers
         public IActionResult PatchBlog(int id, [FromBody] BlogDataModels blog)
         {
             BlogResponseModel model = new BlogResponseModel();
-            var item = _db.Blogs.FirstOrDefault(x => x.Blog_Id == id);
+            var item = _context.Blogs.FirstOrDefault(x => x.Blog_Id == id);
 
             if (item is null)
             {
@@ -117,7 +117,7 @@ namespace KTDotNetCore.RestApi.Controllers
                 item.Blog_Content = blog.Blog_Content;
             }
 
-            var result = _db.SaveChanges();
+            var result = _context.SaveChanges();
             string message = result > 0 ? "Updating Successful." : "Updating Failed.";
 
             model = new BlogResponseModel()
@@ -132,7 +132,7 @@ namespace KTDotNetCore.RestApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteBlog(int id)
         {
-            var blog = _db.Blogs.FirstOrDefault(b => b.Blog_Id == id);
+            var blog = _context.Blogs.FirstOrDefault(b => b.Blog_Id == id);
 
             BlogResponseModel data = new BlogResponseModel();
             if (blog is null)
@@ -142,8 +142,8 @@ namespace KTDotNetCore.RestApi.Controllers
                 return NotFound(data);
             }
 
-            _db.Blogs.Remove(blog);
-            _db.SaveChanges();
+            _context.Blogs.Remove(blog);
+            _context.SaveChanges();
             data.IsSuccess = true;
             data.Message = "Success";
             return Ok(data);

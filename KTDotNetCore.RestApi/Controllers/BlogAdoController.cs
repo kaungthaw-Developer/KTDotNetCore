@@ -18,8 +18,9 @@ namespace KTDotNetCore.RestApi.Controllers
             string connectionString = configuration.GetConnectionString("DbConnection");
             _sqlStringBuilder = new SqlConnectionStringBuilder(connectionString);
         }
+
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetBlog()
         {
             string query = "select * from tbl_blog";
 
@@ -55,7 +56,7 @@ namespace KTDotNetCore.RestApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] BlogDataModels model)
+        public IActionResult CreateBlog([FromBody] BlogDataModels model)
         {
             string query = @"insert into [dbo].[tbl_blog] (
 	                        [Blog_Title],
@@ -78,8 +79,38 @@ namespace KTDotNetCore.RestApi.Controllers
             };
             return Ok(models);
         }
-        [HttpGet("{id}")]
-        public IActionResult Delete(int id)
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateBlog(int id,[FromBody] BlogDataModels model)
+        {
+            string query = @"update [dbo].[tbl_blog] set [Blog_Title]=@Blog_Title,[Blog_Author] = @Blog_Author,
+                             [Blog_Content] = @Blog_Content
+                              where Blog_Id=@Id";
+            SqlConnection connection = new SqlConnection(_sqlStringBuilder.ConnectionString);
+            connection.Open();
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("id", id);
+            cmd.Parameters.AddWithValue("Blog_Title", model.Blog_Title);
+            cmd.Parameters.AddWithValue("Blog_Content", model.Blog_Content);
+            cmd.Parameters.AddWithValue("Blog_Author", model.Blog_Author);
+
+            int result = cmd.ExecuteNonQuery();
+            string message = result > 0 ? "Successfull update" : "no somone have error";
+            connection.Close();
+            BlogResponseModel blog = new BlogResponseModel();
+            blog.IsSuccess = result > 0;
+            blog.Message = message;
+            if (result < 0)
+            {
+                return NotFound(blog);
+            }
+            model.Blog_Id = id;
+            blog.Data = model;
+            return Ok(blog);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteBlog(int id)
         {
             string query = @"delete from [dbo].[tbl_blog]
                                 where Blog_Id=@Id";
@@ -98,8 +129,9 @@ namespace KTDotNetCore.RestApi.Controllers
             };
             return Ok(models);
         }
+
         [HttpGet("{id}")]
-        public IActionResult Edit(int id)
+        public IActionResult EditBlog(int id)
         {
             string query = "select * from dbo.tbl_blog where Blog_Id=@Blog_Id";
             SqlConnection connection = new SqlConnection(_sqlStringBuilder.ConnectionString);
@@ -130,36 +162,10 @@ namespace KTDotNetCore.RestApi.Controllers
             models.Data = dataModel;
             return Ok(models);
         }
-        [HttpPut("{id}")]
-        public IActionResult Update(int id,[FromBody] BlogDataModels model)
-        {
-            string query = @"update [dbo].[tbl_blog] set [Blog_Title]=@Blog_Title,[Blog_Author] = @Blog_Author,
-                             [Blog_Content] = @Blog_Content
-                              where Blog_Id=@Id";
-            SqlConnection connection = new SqlConnection(_sqlStringBuilder.ConnectionString);
-            connection.Open();
-            SqlCommand cmd = new SqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("id", id);
-            cmd.Parameters.AddWithValue("Blog_Title", model.Blog_Title);
-            cmd.Parameters.AddWithValue("Blog_Content", model.Blog_Content);
-            cmd.Parameters.AddWithValue("Blog_Author", model.Blog_Author);
 
-            int result = cmd.ExecuteNonQuery();
-            string message = result > 0 ? "Successfull update" : "no somone have error";
-            connection.Close();
-            BlogResponseModel blog = new BlogResponseModel();
-            blog.IsSuccess = result > 0;
-            blog.Message = message;
-            if (result < 0)
-            {
-                return NotFound(blog);
-            }
-            model.Blog_Id = id;
-            blog.Data = model;
-            return Ok(blog);
-        }
+
         [HttpPatch("{id}")]
-        public IActionResult Patch(int id, [FromBody] BlogViewModels blog)
+        public IActionResult PatchBlog(int id, [FromBody] BlogViewModels blog)
         {
             string query = "select * from dbo.tbl_blog where Blog_Id=@Blog_Id";
             SqlConnection connection = new SqlConnection(_sqlStringBuilder.ConnectionString);

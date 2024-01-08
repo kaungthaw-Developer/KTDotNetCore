@@ -18,8 +18,8 @@ namespace KTDotNetCore.RestApi.Controllers
             _sqlStringBuilder = new SqlConnectionStringBuilder(connectionString);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get()
+        [HttpGet]
+        public IActionResult GetBlog()
         {
             string query = "select * from tbl_blog ";
             using   IDbConnection db = new SqlConnection(_sqlStringBuilder.ConnectionString);
@@ -33,8 +33,9 @@ namespace KTDotNetCore.RestApi.Controllers
 
             return Ok(model);
         }
+
         [HttpPost]
-        public IActionResult Create([FromBody] BlogDataModels blog)
+        public IActionResult CreateBlog([FromBody] BlogDataModels blog)
         {
             string query = @"insert into [dbo].[tbl_blog] (
 	                        [Blog_Title],
@@ -52,31 +53,65 @@ namespace KTDotNetCore.RestApi.Controllers
             };
             return Ok(model);
         }
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id) 
+
+        [HttpGet("{id}")]
+        public IActionResult EditBlog(int id)
         {
-            string query = "delete from [dbo].[tbl_blog] where Blog_Id=@Blog_Id ";
-            using IDbConnection db = new SqlConnection(_sqlStringBuilder.ConnectionString);
-            db.Open();
-            BlogDataModels data = new BlogDataModels()
+            string query = "SELECT * FROM [Tbl_Blog] WHERE [Blog_Id] = @Blog_Id";
+
+            BlogDataModels dataModel = new BlogDataModels()
             {
-                Blog_Id = id
+                Blog_Id = id,
             };
-            int result = db.Execute(query, data);
-            string message = result > 0 ? "succeful delete  " : "someting wrong";
+
+            using IDbConnection db = new SqlConnection(_sqlStringBuilder.ConnectionString);
+            BlogDataModels item = db.Query<BlogDataModels>(query, dataModel).FirstOrDefault();
+
             BlogResponseModel model = new BlogResponseModel();
-            if (result > 0)
+            if (item == null)
             {
-                model.IsSuccess = result > 0;
-                model.Message = message;
-                return Ok(model);
+                model.IsSuccess = false;
+                model.Message = "No Data Found!!";
+                return NotFound(model);
             }
-            model.IsSuccess = result > 0;
-            model.Message = message;
+
+            model.IsSuccess = true;
+            model.Message = "Success";
+            model.Data = item;
             return Ok(model);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateBlog(int id, [FromBody] BlogDataModels blog)
+        {
+            string query = @"UPDATE [dbo].[Tbl_Blog]
+                             SET
+                             [Blog_Title] = @Blog_Title,
+                             [Blog_Author] = @Blog_Author,
+                             [Blog_Content] = @Blog_Content
+                             WHERE
+                             [Blog_Id] = @Blog_Id";
+
+            using IDbConnection db = new SqlConnection(_sqlStringBuilder.ConnectionString);
+            blog.Blog_Id = id;
+            var result = db.Execute(query, blog);
+
+            string message = result > 0 ? "Update Successful !!" : "Error While Update !!";
+
+            BlogResponseModel model = new BlogResponseModel();
+            model.IsSuccess = result > 0;
+            model.Message = message;
+
+            if (result < 0)
+            {
+                return NotFound(model);
+            }
+            model.Data = blog;
+            return Ok(model);
+        }
+
         [HttpPatch("{id}")]
-        public IActionResult Patch(int id)
+        public IActionResult PatchBlog(int id)
         {
             string query = "select * from dbo.tbl_blog where Blog_Id=@Blog_Id";
             BlogDataModels blog = new BlogDataModels()
@@ -112,6 +147,30 @@ namespace KTDotNetCore.RestApi.Controllers
 
             string message = result > 0 ? "Success Update." : "something wrong.";
 
+            model.IsSuccess = result > 0;
+            model.Message = message;
+            return Ok(model);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteBlog(int id)
+        {
+            string query = "delete from [dbo].[tbl_blog] where Blog_Id=@Blog_Id ";
+            using IDbConnection db = new SqlConnection(_sqlStringBuilder.ConnectionString);
+            db.Open();
+            BlogDataModels data = new BlogDataModels()
+            {
+                Blog_Id = id
+            };
+            int result = db.Execute(query, data);
+            string message = result > 0 ? "succeful delete  " : "someting wrong";
+            BlogResponseModel model = new BlogResponseModel();
+            if (result > 0)
+            {
+                model.IsSuccess = result > 0;
+                model.Message = message;
+                return Ok(model);
+            }
             model.IsSuccess = result > 0;
             model.Message = message;
             return Ok(model);

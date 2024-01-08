@@ -38,6 +38,7 @@ namespace KTDotNetCore.Mvc.Controllers
 
             return View("BlogIndex", model);
         }
+
         [HttpPost]
         [ActionName("Save")]
         public async Task<IActionResult> Save(BlogDataModels blog)
@@ -48,6 +49,7 @@ namespace KTDotNetCore.Mvc.Controllers
             TempData["Message"] = result > 0 ? "Success  save" : "something was wrong.";
             return Redirect("/Blog");
         }
+
         [ActionName("Create")]
         public IActionResult create()
         {

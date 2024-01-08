@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace KTDotNetCore.ConsoleApp.Model
 {
-     [Table("tbl_blog")]
+    [Table("tbl_blog")]
     public class BlogDataModels
     {
         [Key]
