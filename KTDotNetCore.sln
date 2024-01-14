@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KTDoNetCoreAjax", "..\..\so
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KTDotNetCore.ATMWebApp", "KTDotNetCore.ATMWebApp\KTDotNetCore.ATMWebApp.csproj", "{23291983-604D-4BB6-B877-FD1F7C1BCCC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KTDotNetCore.MinimalApi", "KTDotNetCore.MinimalApi\KTDotNetCore.MinimalApi.csproj", "{3AA67BF3-15DA-475C-B634-65A06B7C03C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KTDotNetCore.loginWebApp", "KTDotNetCore.loginWebApp\KTDotNetCore.loginWebApp.csproj", "{C55EC40C-C726-444B-B0DB-19254EDCA889}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{23291983-604D-4BB6-B877-FD1F7C1BCCC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23291983-604D-4BB6-B877-FD1F7C1BCCC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23291983-604D-4BB6-B877-FD1F7C1BCCC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AA67BF3-15DA-475C-B634-65A06B7C03C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AA67BF3-15DA-475C-B634-65A06B7C03C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AA67BF3-15DA-475C-B634-65A06B7C03C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AA67BF3-15DA-475C-B634-65A06B7C03C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C55EC40C-C726-444B-B0DB-19254EDCA889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C55EC40C-C726-444B-B0DB-19254EDCA889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C55EC40C-C726-444B-B0DB-19254EDCA889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C55EC40C-C726-444B-B0DB-19254EDCA889}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

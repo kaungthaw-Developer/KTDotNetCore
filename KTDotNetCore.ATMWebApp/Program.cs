@@ -26,6 +26,7 @@ namespace KTDotNetCore.ATMWebApp
             },
             ServiceLifetime.Transient,
             ServiceLifetime.Transient);
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -1,5 +1,4 @@
-﻿
-using KTDotNetCore.Mvc.Model;
+﻿using KTDotNetCore.Mvc.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace KTDotNetCore.Mvc.EfDbContext

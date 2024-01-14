@@ -1,4 +1,4 @@
-﻿using KTDotNetCore.RestApi.EFCoreExamples;
+﻿using KTDotNetCore.RestApi;
 using KTDotNetCore.RestApi.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +50,7 @@ namespace KTDotNetCore.RestApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateBlog([FromBody] BlogDataModels blog)
+        public IActionResult CreateBlog(BlogDataModels blog)
         {
             _context.Blogs.Add(blog);
             var result = _context.SaveChanges();
@@ -64,7 +64,7 @@ namespace KTDotNetCore.RestApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateBlog(int id, [FromBody] BlogDataModels blog)
+        public IActionResult UpdateBlog(int id, BlogDataModels blog)
         {
             BlogResponseModel model = new BlogResponseModel();
 

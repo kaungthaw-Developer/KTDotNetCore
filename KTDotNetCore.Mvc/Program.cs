@@ -1,5 +1,9 @@
 using KTDotNetCore.Mvc.EfDbContext;
+using KTDotNetCore.Mvc.Intrerface;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Refit;
+using RestSharp;
 
 namespace KTDotNetCore.Mvc
 {
@@ -18,6 +22,28 @@ namespace KTDotNetCore.Mvc
             },
             ServiceLifetime.Transient,
             ServiceLifetime.Transient);
+
+            #region Refit
+
+            builder.Services
+            .AddRefitClient<IBlogApi>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration.GetSection("RestApi").Value!));
+
+            #endregion
+
+            #region 
+            builder.Services.AddScoped(x => new HttpClient
+            {
+                BaseAddress = new Uri(builder.Configuration.GetSection("RestApi").Value!)
+            });
+            #endregion
+
+            #region 
+
+            builder.Services.AddScoped(x => new RestClient(builder.Configuration.GetSection("RestApi").Value!));
+
+            #endregion
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

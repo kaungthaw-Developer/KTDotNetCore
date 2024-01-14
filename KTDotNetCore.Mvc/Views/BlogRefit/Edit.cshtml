@@ -1,0 +1,32 @@
+﻿@model BlogDataModels
+@{
+ string message = null;
+ bool isSuccess = false;
+ if (TempData["Message"] != null)
+ {
+     message = TempData["Message"].ToString();
+     isSuccess = Convert.ToBoolean(TempData["IsSuccess"]);
+ }
+}
+@if (message is not null)
+{
+    <div class="alert alert-@(isSuccess ? "success" : "danger")" role="alert">
+        @message
+    </div>
+}
+<form asp-action="Update" asp-route-id="@Model.Blog_Id" method="post">
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" name="Blog_Title" value="@Model.Blog_Title" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Author</label>
+        <input type="text" name="Blog_Author" value="@Model.Blog_Author" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Content</label>
+        <input type="text" name="Blog_Content" value="@Model.Blog_Content" class="form-control">
+    </div>
+    <a href="/blog" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-success">Update</button>
+</form>

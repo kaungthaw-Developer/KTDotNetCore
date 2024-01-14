@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace KTDotNetCore.Mvc.Model
+namespace KTDotNetCore.Mvc.Models
 {
      [Table("tbl_blog")]
     public class BlogDataModels

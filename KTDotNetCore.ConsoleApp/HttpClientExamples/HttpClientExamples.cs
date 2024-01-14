@@ -17,7 +17,8 @@ namespace KTDotNetCore.ConsoleApp.HttpClientExamples
             //await Read();
             //await Edit(31);
             //await Create("Title","Autor","Context");
-            await Delete(37);
+            //await Delete(37);
+            await Update(30, "Title", "Author", "COntext");
         }
 
         public async Task Read()
@@ -40,7 +41,7 @@ namespace KTDotNetCore.ConsoleApp.HttpClientExamples
         private async Task Edit(int id)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync($"https://localhost:7244/api/blog/{id}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7206/api/blog/{id}");
             if (response.IsSuccessStatusCode)
             {
                 string jsonStr = await response.Content.ReadAsStringAsync();
@@ -71,7 +72,7 @@ namespace KTDotNetCore.ConsoleApp.HttpClientExamples
             HttpContent httpContent = new StringContent(jsonBlog, Encoding.UTF8, Application.Json);
 
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.PostAsync("https://localhost:7244/api/blog", httpContent);
+            HttpResponseMessage response = await client.PostAsync("https://localhost:7206/api/blog", httpContent);
             if (response.IsSuccessStatusCode)
             {
                 string jsonStr = await response.Content.ReadAsStringAsync();
@@ -92,7 +93,7 @@ namespace KTDotNetCore.ConsoleApp.HttpClientExamples
             HttpContent httpContent = new StringContent(jsonBlog, Encoding.UTF8, Application.Json);
 
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.PutAsync($"https://localhost:7244/api/blog/{id}", httpContent);
+            HttpResponseMessage response = await client.PutAsync($"https://localhost:7206/api/blog/{id}", httpContent);
             if (response.IsSuccessStatusCode)
             {
                 string jsonStr = await response.Content.ReadAsStringAsync();
@@ -110,7 +111,7 @@ namespace KTDotNetCore.ConsoleApp.HttpClientExamples
         private async Task Delete(int id)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.DeleteAsync($"https://localhost:7244/api/blog/{id}");
+            HttpResponseMessage response = await client.DeleteAsync($"https://localhost:7206/api/blog/{id}");
             if (response.IsSuccessStatusCode)
             {
                 string jsonStr = await response.Content.ReadAsStringAsync();

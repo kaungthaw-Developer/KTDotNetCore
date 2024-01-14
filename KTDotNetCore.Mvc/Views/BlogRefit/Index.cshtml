@@ -1,0 +1,48 @@
+﻿@model BlogListResponseModel
+@{
+    int rowCount = 0;
+    string message = null;
+    bool isSuccess = false;
+    if (TempData["Message"] != null)
+    {
+        message = TempData["Message"].ToString();
+        isSuccess = Convert.ToBoolean(TempData["IsSuccess"]);
+    }
+}
+
+@if (message is not null)
+{
+    <div class="alert alert-@(isSuccess ? "success" : "danger")" role="alert">
+        @message
+    </div>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Authoe</th>
+            <th scope="col">Content</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td>
+                   
+                    <a asp-action="Edit" asp-route-id="@item.Blog_Id">
+                        <button class="btn btn-warning">Update</button>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Blog_Id">
+                        <button class="btn btn-danger">Delete</button>
+                    </a>
+                </td>
+                <th scope="row">@(++rowCount)</th>
+                <td>@item.Blog_Title</td>
+                <td>@item.Blog_Author</td>
+                <td>@item.Blog_Content</td>
+            </tr>
+        }
+    </tbody>
+</table>
